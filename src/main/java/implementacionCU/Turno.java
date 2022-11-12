@@ -51,5 +51,12 @@ public class Turno  {
         return fechaFormateada.substring(8, 10)+"-"+fechaFormateada.substring(4,7);
     }
     
+    public String getFechaHoraInicioCompleto(){
+        String fechaFormateada= ""+fechaHoraInicio.getTime();
+
+        return fechaFormateada.substring(8, 10)+" de "+fechaFormateada.substring(4,7)+" de " +fechaFormateada.substring(24, 28) + " a las "+ fechaFormateada.substring(11, 19);
+
+    }
+    
     
 }

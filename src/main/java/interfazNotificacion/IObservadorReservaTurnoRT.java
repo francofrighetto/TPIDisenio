@@ -4,6 +4,7 @@
  */
 package interfazNotificacion;
 
+import implementacionCU.RecursoTecnologico;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,5 +15,5 @@ import java.util.GregorianCalendar;
  * @author Franco
  */
 public interface IObservadorReservaTurnoRT {
-    public void enviarNotificacion(String numeroRT, GregorianCalendar fechaHoraActual, ArrayList<String> contactos);
+    public void enviarNotificacion(RecursoTecnologico numeroRT, String fechaHoraActual, ArrayList<String> contactos);
 }

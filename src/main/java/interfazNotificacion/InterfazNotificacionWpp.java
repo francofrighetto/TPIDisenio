@@ -4,10 +4,14 @@
  */
 package interfazNotificacion;
 
+import implementacionCU.RecursoTecnologico;
+import java.awt.Frame;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,12 +24,15 @@ public class InterfazNotificacionWpp implements IObservadorReservaTurnoRT {
     private LocalTime hora;
     private ArrayList<String> contactos;
     @Override
-    public void enviarNotificacion(String numeroRT, GregorianCalendar fechaHoraActual, ArrayList<String> contactos) {
-        this.enviarMensaje();
+    public void enviarNotificacion(RecursoTecnologico numeroRT, String fechaHoraActual, ArrayList<String> contactos) {
+        String mensaje ="Se ha registrado la reserva del turno para el recurso tecnologico "+numeroRT+", \n"
+                + " en la fecha  " +fechaHoraActual +" al contacto " + contactos.get(1);
+        this.enviarMensaje(mensaje);
     }
     
-    public void enviarMensaje(){
-        // implementar ...
+    public void enviarMensaje(String mensaje){
+        Frame jFrame = new JFrame();
+        JOptionPane.showMessageDialog(jFrame, "Se ha enviado el siguiente mensaje via WhatsApp \n "+mensaje);
     }
 
     @Override

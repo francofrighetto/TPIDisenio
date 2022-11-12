@@ -52,8 +52,8 @@ public class PersonalCientifico {
     
     public ArrayList<String> conocerContactosPC(){
         ArrayList<String> contactos = new ArrayList<>();
-        contactos.add(correoElectronicoInstitucional);
-        contactos.add(telefonoCelular);
+        contactos.add(this.getCorreoInstitucional());
+        contactos.add(this.getTelefonoCelular());
         return contactos;
     }
     

@@ -26,6 +26,7 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
     private IObservadorReservaTurnoRT seleccionTipoNotificacion;
     private Object RTxCI [][];
     private String fechaSeleccionadaTurno;
+    private String fechaHoraSeleccionadaTurno;
     private List<Turno> turnosPorFechaSel=new ArrayList<>();
     private List<Estado> estados = new ArrayList<>();
     private ArrayList<String> contactos = new ArrayList<>();
@@ -51,7 +52,7 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
     @Override
     public void notificar() {
         for (IObservadorReservaTurnoRT ob : observadores){
-            ob.enviarNotificacion(fechaSeleccionadaTurno, fechaHoraActual, contactos);
+            ob.enviarNotificacion(seleccionRecursoTecnologico, fechaHoraSeleccionadaTurno, contactos);
         }
     }
 
@@ -143,11 +144,15 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
     
     public void tomarSeleccionTurno(Turno turno){
         this.seleccionTurno=turno;
+        this.fechaHoraSeleccionadaTurno=turno.getFechaHoraInicioCompleto();
         this.tomarConfirmacionTurno();
     }
     public void setFechaSeleccionadaTurno(Date fecha){
         String fechaFormateada= ""+fecha;
+        System.out.println(fechaFormateada);
         this.fechaSeleccionadaTurno= fechaFormateada.substring(8, 10)+"-"+fechaFormateada.substring(4,7);
+        //this.fechaHoraSeleccionadaTurno= fechaFormateada.substring(8, 10)+"/"+fechaFormateada.substring(4,7)+"/" +fechaFormateada.substring(24, 28) + " "+ fechaFormateada.substring(11, 19);
+
         this.agruparYOrdenarTurnos();
     }
     private void tomarConfirmacionTurno(
