@@ -51,7 +51,7 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
     // metodos implementados de ISujeto
     @Override
     public void notificar() {
-        for (IObservadorReservaTurnoRT ob : observadores){
+        for (IObservadorReservaTurnoRT ob:observadores){
             ob.enviarNotificacion(seleccionRecursoTecnologico, fechaHoraSeleccionadaTurno, contactos);
         }
     }
@@ -149,15 +149,13 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
     }
     public void setFechaSeleccionadaTurno(Date fecha){
         String fechaFormateada= ""+fecha;
-        System.out.println(fechaFormateada);
         this.fechaSeleccionadaTurno= fechaFormateada.substring(8, 10)+"-"+fechaFormateada.substring(4,7);
         //this.fechaHoraSeleccionadaTurno= fechaFormateada.substring(8, 10)+"/"+fechaFormateada.substring(4,7)+"/" +fechaFormateada.substring(24, 28) + " "+ fechaFormateada.substring(11, 19);
 
         this.agruparYOrdenarTurnos();
     }
-    private void tomarConfirmacionTurno(
-            
-    ){}
+    private void tomarConfirmacionTurno(){
+    }
     public Turno getSeleccionTurno(){
         return this.seleccionTurno;
     }
@@ -172,11 +170,11 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
     
     
     public void pedirConfirmacionReservaTurno(){
-        
     }
     
     public void tomarSeleccionTipoNotificacion(IObservadorReservaTurnoRT tipo){
         this.seleccionTipoNotificacion=tipo;
+
     }
     
     public void mandarNotificacion(){
@@ -185,12 +183,10 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
         this.suscribir(seleccionTipoNotificacion);
 
         this.notificar();
+        this.registrarReservaTurnoDeRT();
         
         
-        /*
-        JFrame jFrame = new JFrame();
-        JOptionPane.showMessageDialog(jFrame, "Mensaje enviado por "+this.seleccionTipoNotificacion);
-        */
+  
     }
     
     
@@ -205,8 +201,9 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
             }
         }
         seleccionRecursoTecnologico.actualizarEstadoTurno(estadoRegistrar);
+        
         System.out.println(seleccionRecursoTecnologico.getActual().getEstado());
-        this.mandarNotificacion();
+
         this.finCU();
         
     }

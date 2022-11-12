@@ -400,8 +400,9 @@ public class PantallaRegistrarReservaTurnoRT extends javax.swing.JFrame {
         miGestor.tomarSeleccionTipoNotificacion((IObservadorReservaTurnoRT) this.jComboBox3.getSelectedItem());
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
+    // boton de confirmar turno
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        miGestor.registrarReservaTurnoDeRT();
+        miGestor.mandarNotificacion();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
