@@ -23,14 +23,19 @@ public class InterfazNotificacionWpp implements IObservadorReservaTurnoRT {
     private Date fecha;
     private LocalTime hora;
     private ArrayList<String> contactos;
+    
     @Override
     public void enviarNotificacion(RecursoTecnologico numeroRT, String fechaHoraActual, ArrayList<String> contactos) {
+        // define el mensaje que se va a mandar y llama a un metodo de envio propio
+
         String mensaje ="Se ha registrado la reserva del turno para el recurso tecnologico "+numeroRT+", \n"
                 + " en la fecha  " +fechaHoraActual +" al contacto " + contactos.get(1);
         this.enviarMensaje(mensaje);
     }
     
     public void enviarMensaje(String mensaje){
+        // muestra mediante una ventana una simulacion del mensaje a enviar
+
         Frame jFrame = new JFrame();
         JOptionPane.showMessageDialog(jFrame, "Se ha enviado el siguiente mensaje via WhatsApp \n "+mensaje);
     }

@@ -10,6 +10,7 @@ package interfazNotificacion;
  * @author Franco
  */
 public interface ISujeto {
+    // metodos a implementar
     public void notificar();
     public void suscribir(IObservadorReservaTurnoRT ob);
     public void quitar(IObservadorReservaTurnoRT ob);

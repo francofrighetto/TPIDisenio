@@ -401,6 +401,7 @@ public class PantallaRegistrarReservaTurnoRT extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     // boton de confirmar turno
+    // metodo que desencadena
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         miGestor.mandarNotificacion();
     }//GEN-LAST:event_jButton3ActionPerformed

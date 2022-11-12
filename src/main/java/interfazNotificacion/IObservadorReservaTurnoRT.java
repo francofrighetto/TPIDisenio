@@ -15,5 +15,6 @@ import java.util.GregorianCalendar;
  * @author Franco
  */
 public interface IObservadorReservaTurnoRT {
+    // define el metodo polimmorfico
     public void enviarNotificacion(RecursoTecnologico numeroRT, String fechaHoraActual, ArrayList<String> contactos);
 }

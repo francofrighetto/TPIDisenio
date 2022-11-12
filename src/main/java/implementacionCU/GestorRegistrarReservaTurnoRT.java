@@ -48,9 +48,10 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
         
     }
     
-    // metodos implementados de ISujeto
+    // metodos implementados de ISujeto (notificar, suscribir, quitar)
     @Override
     public void notificar() {
+        // de cada observador (en este caso es uno solo) llama al metodo polimorfico y delega
         for (IObservadorReservaTurnoRT ob:observadores){
             ob.enviarNotificacion(seleccionRecursoTecnologico, fechaHoraSeleccionadaTurno, contactos);
         }
@@ -63,7 +64,7 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
 
     @Override
     public void quitar(IObservadorReservaTurnoRT ob) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        observadores.remove(0);
     }
 
     // le paso una lista con todas las direcciones de memoria de cada tipo
@@ -106,11 +107,6 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
     }
     
     private void validarPersonalCientifico(){
-        
-        /*
-        seleccionadoCentro.misCientificosActivos();
-        this.personalCientificoLogeado = seleccionadoCentro.getPersonalLogeado(this.usuarioLogeado); 
-        */
         
         seleccionadoCentro=ordenarRTporCI(seleccionRecursoTecnologico);
         seleccionadoCentro.misCientificosActivos();
@@ -177,12 +173,18 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
 
     }
     
+    // rediseño
     public void mandarNotificacion(){
-        
+        // busca el mail y numero de telefono del personal cientifico seleccionado
         this.contactos = this.personalCientificoLogeado.conocerContactosPC();
+        
+        // suscribe el observador (tipo de notificacion) seleccionado
         this.suscribir(seleccionTipoNotificacion);
 
+        // llama al metodo implementado de ISujeto
         this.notificar();
+        
+        // una vez que notifica, registra el turno
         this.registrarReservaTurnoDeRT();
         
         
@@ -234,14 +236,21 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
         Sesion s1 = new Sesion(u1);
         actualS = s1;
         // creamos tipos de recursos tecnologicos
-        TipoRecursoTecnologico tipo1 = new TipoRecursoTecnologico("tipo1") ;
-        TipoRecursoTecnologico tipo2 = new TipoRecursoTecnologico("tipo2") ;
-        TipoRecursoTecnologico tipo3 = new TipoRecursoTecnologico("tipo3") ;
+        TipoRecursoTecnologico tipo1 = new TipoRecursoTecnologico("Balanzas de precisión") ;
+        TipoRecursoTecnologico tipo2 = new TipoRecursoTecnologico("Microscopios") ;
+
+        TipoRecursoTecnologico tipo3 = new TipoRecursoTecnologico("Resonadores magneticos") ;
+        TipoRecursoTecnologico tipo4 = new TipoRecursoTecnologico("Equipamiento de computo") ;
+        
+
 
         // creamos una lista para tener todos los tipos de recursos
         listaTiposRT.add(tipo1) ;
         listaTiposRT.add(tipo2) ;
         listaTiposRT.add(tipo3) ;
+        listaTiposRT.add(tipo4) ;
+
+        
 
         // creamos dos centros de investigacion, uno activo y el otro no
         CentroDeInvestigacion ci1 = new CentroDeInvestigacion("AAA", 2019, 0, 1, 2030, 0, 1) ;
@@ -259,17 +268,19 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
         CambioEstadoRT cambio3 = new CambioEstadoRT(f, e3);
 
         //creamos marcas
-        Marca marca1 = new Marca("marca1");
-        Marca marca2 = new Marca("marca2");
+        Marca marca1 = new Marca("Shidmazu");
+        Marca marca2 = new Marca("Nikon");
         
         //creamos modelos
-        Modelo modelo1 = new Modelo("modelo1",marca1);
-        Modelo modelo2 = new Modelo("modelo2",marca1);
+        Modelo modelo1 = new Modelo("TXB622L",marca1);
+        Modelo modelo2 = new Modelo("MM-400/800",marca2);
+        Modelo modelo3 = new Modelo("FF1411N",marca1);
         
         // creamos recursos tecnologicos
         RecursoTecnologico rt1 = new RecursoTecnologico(111, 1, 1, 2022, tipo1, false, cambio1, modelo1) ;
-        RecursoTecnologico rt2 = new RecursoTecnologico(555, 10, 1, 2022, tipo1, false, cambio2, modelo2) ;
-        RecursoTecnologico rt3 = new RecursoTecnologico(565, 10, 1, 2022, tipo1, false, cambio3, modelo2) ;
+        RecursoTecnologico rt2 = new RecursoTecnologico(555, 10, 1, 2022, tipo2, false, cambio2, modelo2) ;
+        RecursoTecnologico rt3 = new RecursoTecnologico(565, 10, 1, 2022, tipo2, false, cambio3, modelo2) ;
+        RecursoTecnologico rt4 = new RecursoTecnologico(222, 1, 1, 2022, tipo1, false, cambio2, modelo3) ;
 
         // agregamos los recursos a un centro
         centros.add(ci1);
@@ -277,6 +288,8 @@ public class GestorRegistrarReservaTurnoRT implements ISujeto{
         ci1.agregarRT(rt1);
         ci1.agregarRT(rt2);
         ci1.agregarRT(rt3);
+        ci1.agregarRT(rt4);
+
         ci1.agregarCientifico(a1);
         usuarioLogeado = u1;
         
