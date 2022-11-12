@@ -1,5 +1,8 @@
 package implementacionCU ; // despues vemos el tema de las carpetas
 
+import interfazNotificacion.IObservadorReservaTurnoRT;
+import interfazNotificacion.ISujeto;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -7,7 +10,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class GestorRegistrarReservaTurnoRT {
+public class GestorRegistrarReservaTurnoRT implements ISujeto{
     private List<TipoRecursoTecnologico> listaTiposRT = new ArrayList<>() ;
     private TipoRecursoTecnologico seleccionTipoRecurso ;
     private List<CentroDeInvestigacion> centros = new ArrayList<>() ;
@@ -20,11 +23,17 @@ public class GestorRegistrarReservaTurnoRT {
     private GregorianCalendar fechaHoraActual ;
     private List<Turno> listaTurnos = new ArrayList<>() ;
     private Turno seleccionTurno;
-    private String seleccionTipoNotificacion;
+    private IObservadorReservaTurnoRT seleccionTipoNotificacion;
     private Object RTxCI [][];
     private String fechaSeleccionadaTurno;
     private List<Turno> turnosPorFechaSel=new ArrayList<>();
     private List<Estado> estados = new ArrayList<>();
+    private ArrayList<String> contactos = new ArrayList<>();
+    
+    // observadores (patron)
+    private List<IObservadorReservaTurnoRT> observadores = new ArrayList<>();
+
+        
         
 
 
@@ -36,6 +45,24 @@ public class GestorRegistrarReservaTurnoRT {
     public List<TipoRecursoTecnologico> nuevaReservaTurnoRT(){
         return this.buscarTipoRecursoTecnologico();
         
+    }
+    
+    // metodos implementados de ISujeto
+    @Override
+    public void notificar() {
+        for (IObservadorReservaTurnoRT ob : observadores){
+            ob.enviarNotificacion(fechaSeleccionadaTurno, fechaHoraActual, contactos);
+        }
+    }
+
+    @Override
+    public void suscribir(IObservadorReservaTurnoRT ob) {
+        this.observadores.add(ob);
+    }
+
+    @Override
+    public void quitar(IObservadorReservaTurnoRT ob) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     // le paso una lista con todas las direcciones de memoria de cada tipo
@@ -142,14 +169,27 @@ public class GestorRegistrarReservaTurnoRT {
     public void pedirConfirmacionReservaTurno(){
         
     }
-    public void tomarSeleccionTipoNotificacion(String tipo){
+    
+    public void tomarSeleccionTipoNotificacion(IObservadorReservaTurnoRT tipo){
         this.seleccionTipoNotificacion=tipo;
     }
     
     public void mandarNotificacion(){
+        
+        this.contactos = this.personalCientificoLogeado.conocerContactosPC();
+        this.suscribir(seleccionTipoNotificacion);
+
+        this.notificar();
+        
+        
+        /*
         JFrame jFrame = new JFrame();
         JOptionPane.showMessageDialog(jFrame, "Mensaje enviado por "+this.seleccionTipoNotificacion);
+        */
     }
+    
+    
+    
     public void registrarReservaTurnoDeRT(){
         Estado estadoRegistrar=null;
         for (Estado e: estados){
@@ -176,9 +216,9 @@ public class GestorRegistrarReservaTurnoRT {
         Usuario u3 = new Usuario("paopao", "112233") ;
 
         // creamos personal cientifico
-        PersonalCientifico pc1 = new PersonalCientifico(01010, "Luciano", "Parruccia", 20000000, "lucianoParr@gmail.edu", "lucianoParr@gmail.com", 154000000, u1) ;
-        PersonalCientifico pc2 = new PersonalCientifico(22333, "Gabriel", "Bruno", 20000000, "gabBruno009@gmail.edu", "gabBruno009@gmail.com", 154000000, u2) ;
-        PersonalCientifico pc3 = new PersonalCientifico(01010, "Paola", "Simielli", 20000000, "paoSimielli@gmail.edu", "paoSimielli@gmail.edu", 154000000, u3) ;
+        PersonalCientifico pc1 = new PersonalCientifico(01010, "Luciano", "Parruccia", 20000000, "lucianoParr@gmail.edu", "lucianoParr@gmail.com", "154000000", u1) ;
+        PersonalCientifico pc2 = new PersonalCientifico(22333, "Gabriel", "Bruno", 20000000, "gabBruno009@gmail.edu", "gabBruno009@gmail.com", "154000000", u2) ;
+        PersonalCientifico pc3 = new PersonalCientifico(01010, "Paola", "Simielli", 20000000, "paoSimielli@gmail.edu", "paoSimielli@gmail.edu", "154000000", u3) ;
 
         // creamos asignaciones de cientificos
         AsignacionCientificoDelCI a1 = new AsignacionCientificoDelCI(2000, 0, 1,2025, 0, 1, pc1) ;
@@ -256,8 +296,10 @@ public class GestorRegistrarReservaTurnoRT {
         CambioEstadoTurno c4 = new CambioEstadoTurno(ff,e4);
         
         // 8 de julio del 2022
-        Turno t1 = new Turno(2022, 6, 8,15,30,0,16,0,0,2022,6,9,c4);
+        Turno t1 = new Turno(2022, 10, 20,15,30,0,16,0,0,2022,10,21,c4);
         rt1.agregarTurno(t1);
        
 }
+
+    
 }

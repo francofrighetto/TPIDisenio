@@ -1,5 +1,7 @@
 package implementacionCU;
 
+import java.util.ArrayList;
+
 public class PersonalCientifico {
     private int legajo; 
     private String nombre;
@@ -7,10 +9,12 @@ public class PersonalCientifico {
     private int numeroDocumento;
     private String correoElectronicoInstitucional;
     private String correoElectronicoPersonal ;
-    private int telefonoCelular;
+    private String telefonoCelular;
     private Usuario usuario;
+    
 
-    public PersonalCientifico(int l, String n, String a, int nroDoc, String correoI, String correoP, int t, Usuario u) {
+
+    public PersonalCientifico(int l, String n, String a, int nroDoc, String correoI, String correoP, String t, Usuario u) {
         this.legajo = l ;
         this.nombre = n ;
         this.apellido = a ;
@@ -27,7 +31,7 @@ public class PersonalCientifico {
     public int getNumeroDocumento() { return this.numeroDocumento ; }
     public String getCorreoInstitucional() { return this.correoElectronicoInstitucional ; }
     public String getCorreoPersonal() { return this.correoElectronicoPersonal ; }
-    public int getTelefonoCelular() { return this.telefonoCelular ; }
+    public String getTelefonoCelular() { return this.telefonoCelular ; }
     public Usuario getUsuario() { return this.usuario ; }
 
     public boolean esTuUsuario(Usuario u) {
@@ -45,5 +49,13 @@ public class PersonalCientifico {
                 "telefono celular: " + this.telefonoCelular + "\n" +
                 "usuario: " + this.usuario ;
     }
+    
+    public ArrayList<String> conocerContactosPC(){
+        ArrayList<String> contactos = new ArrayList<>();
+        contactos.add(correoElectronicoInstitucional);
+        contactos.add(telefonoCelular);
+        return contactos;
+    }
+    
     
 }

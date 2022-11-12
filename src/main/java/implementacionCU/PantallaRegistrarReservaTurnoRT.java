@@ -5,6 +5,9 @@
 package implementacionCU;
 
 import implementacionCU.GestorRegistrarReservaTurnoRT;
+import interfazNotificacion.IObservadorReservaTurnoRT;
+import interfazNotificacion.InterfazNotificacionMail;
+import interfazNotificacion.InterfazNotificacionWpp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -31,14 +34,14 @@ public class PantallaRegistrarReservaTurnoRT extends javax.swing.JFrame {
     private List<RecursoTecnologico> listaRT = new ArrayList<>() ;
     private RecursoTecnologico seleccionRecurso;
     private List<Turno> turnosPorFechaSel = new ArrayList<>() ;
-    private List<String> opcionesNotificacion = new ArrayList<>();
+    private List<IObservadorReservaTurnoRT> opcionesNotificacion = new ArrayList<>();
     /**
      * Creates new form PantallaRegistrarReservaTurnoRT
      */
     public PantallaRegistrarReservaTurnoRT(GestorRegistrarReservaTurnoRT gestor) {
         initComponents();
-        opcionesNotificacion.add("Mail");
-        opcionesNotificacion.add("WhatsApp");
+        opcionesNotificacion.add(new InterfazNotificacionMail());
+        opcionesNotificacion.add(new InterfazNotificacionWpp());
         this.miGestor = gestor;
         this.tipoRT = this.miGestor.nuevaReservaTurnoRT();
         Vector<TipoRecursoTecnologico> model = new Vector();
@@ -385,14 +388,14 @@ public class PantallaRegistrarReservaTurnoRT extends javax.swing.JFrame {
        miGestor.tomarSeleccionTurno((Turno) this.jComboBox2.getSelectedItem());
        this.jLabel8.setText(""+miGestor.getSeleccionTurno()+"  "+this.miGestor.getSeleccionRecursoTecnologico());
        
-        Vector<String> model3 = new Vector();
+        Vector<IObservadorReservaTurnoRT> model3 = new Vector();
         model3.addAll(this.opcionesNotificacion);
-        this.jComboBox3.setModel(new DefaultComboBoxModel<String>(model3));
+        this.jComboBox3.setModel(new DefaultComboBoxModel<IObservadorReservaTurnoRT>(model3));
        
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        miGestor.tomarSeleccionTipoNotificacion((String) this.jComboBox3.getSelectedItem());
+        miGestor.tomarSeleccionTipoNotificacion((IObservadorReservaTurnoRT) this.jComboBox3.getSelectedItem());
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -404,6 +407,7 @@ public class PantallaRegistrarReservaTurnoRT extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
    
 
+   
     /**
      * @param args the command line arguments
      */
@@ -418,7 +422,7 @@ public class PantallaRegistrarReservaTurnoRT extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JComboBox<TipoRecursoTecnologico> jComboBox1;
     private javax.swing.JComboBox<Turno> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<IObservadorReservaTurnoRT> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
